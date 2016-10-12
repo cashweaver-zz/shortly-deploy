@@ -3,7 +3,7 @@ var express = require('express');
 var expect = require('chai').expect;
 var app = require('../server-config.js');
 
-// New line!
+// New line 2!
 
 var db = require('../app/config');
 var User = require('../app/models/user');
