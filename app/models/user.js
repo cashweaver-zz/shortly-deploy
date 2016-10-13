@@ -1,3 +1,4 @@
+/*
 var db = require('../config');
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
@@ -23,3 +24,14 @@ var User = db.Model.extend({
 });
 
 module.exports = User;
+*/
+
+var mongoose = require('mongoose');
+// TODO: replicate the functionality of initialize();
+
+var userSchema = new mongoose.Schema({
+  username: String, 
+  password: String,
+}, { collection: 'users' });
+
+module.exports = mongoose.model('User', userSchema);

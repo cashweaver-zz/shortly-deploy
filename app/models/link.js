@@ -1,3 +1,4 @@
+/*
 var db = require('../config');
 var crypto = require('crypto');
 
@@ -17,3 +18,20 @@ var Link = db.Model.extend({
 });
 
 module.exports = Link;
+*/
+
+
+
+
+var mongoose = require('mongoose');
+// TODO: replicate the functionality of initialize();
+
+var linkSchema = new mongoose.Schema({
+  url: String, 
+  baseUrl: String,
+  code: String, 
+  title: String,
+  visits: Number
+}, { collection: 'urls' });
+
+module.exports = mongoose.model('Link', linkSchema);

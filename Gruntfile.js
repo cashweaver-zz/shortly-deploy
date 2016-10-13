@@ -68,9 +68,7 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        gitpush: {
-          command: 'git push live master',
-        }
+        command: 'git push live master',
       }
     },
   });
