@@ -35,13 +35,32 @@ var userSchema = new mongoose.Schema({
 }, { collection: 'users' });
 
 userSchema.pre('save', function (next) {
-  var cipher = Promise.promisify(bcrypt.hash);
-  return cipher(this.password, null, null).bind(this)
-    .then(function(hash) {
-      this.password = hash;
-      console.log('hash~~~~~~~~~~~~~~~~~', hash);
-      next();
-    });
+  // var startTime = Date.now();
+  // var cipher = Promise.promisify(bcrypt.hash);
+  // return cipher(this.password, null, null).bind(this)
+  //   .then(function(hash) {
+  //     this.password = hash;
+  //     var endTime = Date.now();
+  //     var elapsedTime = endTime - startTime;
+  //     console.log('hashed password in', elapsedTime);
+  //     next();
+  //   });
+
+  var startTime = Date.now();
+  var cipher = bcrypt.hash;
+  return cipher(this.password, null, null, (err, hash) => {
+    if (err) {
+      console.error(err);
+      return next();
+    }
+
+    var endTime = Date.now();
+    var elapsedTime = endTime - startTime;
+    console.log('hashed password in', elapsedTime);
+    this.password = hash;
+    next();
+  });
+
 });
 
 module.exports = mongoose.model('User', userSchema);

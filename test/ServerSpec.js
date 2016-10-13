@@ -175,6 +175,7 @@ describe('', function() {
   describe('Account Creation:', function() {
 
     it('Signup creates a new user', function(done) {
+      this.timeout(10000);
       request(app)
         .post('/signup')
         .send({
@@ -191,6 +192,7 @@ describe('', function() {
     });
 
     it('Successful signup logs in a new user', function(done) {
+      this.timeout(10000);
       request(app)
         .post('/signup')
         .send({
@@ -211,15 +213,24 @@ describe('', function() {
   describe('Account Login:', function() {
 
     beforeEach(function(done) {
+      this.timeout(10000);
+      var startTime = Date.now();
+      console.log('started saving new user');
       new User({
         'username': 'Phillip',
         'password': 'Phillip'
       }).save(function() {
+        var endTime = Date.now();
+        var elapsedTime = endTime - startTime;
+        console.log('finished saving new user in', elapsedTime);
         done();
       });
     });
 
     it('Logs in existing users', function(done) {
+      this.timeout(10000);
+      var startTime = Date.now();
+      console.log('started loging in existing user');
       request(app)
         .post('/login')
         .send({
@@ -229,10 +240,16 @@ describe('', function() {
         .expect(function(res) {
           expect(res.headers.location).to.equal('/');
         })
-        .end(done);
+        .end(function () {
+          var endTime = Date.now();
+          var elapsedTime = endTime - startTime;
+          console.log('finished loging in existing user in', elapsedTime);
+          done();
+        });
     });
 
     it('Users that do not exist are kept on login page', function(done) {
+      this.timeout(10000);
       request(app)
         .post('/login')
         .send({
