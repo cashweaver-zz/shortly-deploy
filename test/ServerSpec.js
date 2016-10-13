@@ -100,7 +100,7 @@ describe('', function() {
           visits: 0
         });
 
-        link.save(function() {
+        link.save(function(err, savedLink) {
           done();
         });
       });
@@ -120,6 +120,7 @@ describe('', function() {
       });
 
       it('Shortcode redirects to correct url', function(done) {
+        // console.log('link in test', link);
         var sha = link.code;
         request(app)
           .get('/' + sha)
